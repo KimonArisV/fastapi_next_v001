@@ -1,0 +1,5 @@
+__pycache__
+venv/
+.env
+test_kimon.py
+sql_kimon_stuff.py
