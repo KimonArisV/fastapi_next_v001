@@ -1,0 +1,35 @@
+version: "3"
+services:
+  name_of_first_service_api:
+    image: kimon24/fast_api_v1_dockerhub
+    depends_on:
+      - postgres
+    ports: 
+      - 8000:8000
+    #binding docker directory with outside docker directory to see changes
+    # volumes:
+    #   - ./:/usr/src:ro
+    #command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    #- <port on localhost>:<port on container> do not forget space between - and <>
+    # env_file:
+    #   -./.env
+    environment:
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - ALGORITHM=${ALGORITHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+      - SECRET_KEY=${SECRET_KEY}
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_USERNAME}
+    volumes:
+    - postgres-db:/var/lib/postgresql/data 
+
+volumes:
+  postgres-db:

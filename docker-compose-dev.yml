@@ -1,0 +1,35 @@
+version: "3"
+services:
+  name_of_first_service_api:
+    build: .
+    depends_on:
+      - postgres
+    ports: 
+      - 8000:8000
+    #binding docker directory with outside docker directory to see changes
+    volumes:
+      - ./:/usr/src:ro
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      #- <port on localhost>:<port on container> do not forget space between - and <>
+    # env_file:
+    #   -./.env
+    environment:
+      - DATABASE_NAME=fastapi_tutorial_db
+      - DATABASE_PASSWORD=kimon24
+      - DATABASE_HOSTNAME=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=postgres
+      - ALGORITHM=HS256
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - SECRET_KEY=05dc5ab71e8cd0ac5cbaa65138a1acb2864f0b207545f27c10017ee7bd347bdf
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=kimon24
+      - POSTGRES_DB=fastapi_tutorial_db
+    volumes:
+    - postgres-db:/var/lib/postgresql/data 
+
+volumes:
+  postgres-db:
