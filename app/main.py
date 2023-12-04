@@ -43,7 +43,7 @@ app.include_router(auth.router)
 #send get request to our API #the path after the domain name of our API
 @app.get("/")  
 async def root():
-    return {"message": "welcome kimon  "}
+    return {"message": "welcome kimon!!!  "}
 
 
 
